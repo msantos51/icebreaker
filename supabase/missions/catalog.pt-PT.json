@@ -1,0 +1,353 @@
+[
+  {
+    "id": "aa_math_joke",
+    "type": "actor_audience",
+    "level": 1,
+    "tags": ["humor"],
+    "message_a": "Conta esta piada a {parceiro}: 'Porque é que o livro de matemática está triste? Porque tem muitos problemas.' Depois pergunta-lhe o que recebeu.",
+    "message_b": "Daqui a pouco {parceiro} vai contar-te uma piada. Missão: ri-te de forma exageradíssima. Telemóvel em baixo para não falhares.",
+    "follow_up": "Telemóveis virados para baixo. Próxima ronda só daqui a uma hora."
+  },
+  {
+    "id": "aa_weird_week",
+    "type": "actor_audience",
+    "level": 1,
+    "tags": ["humor", "conversa"],
+    "message_a": "Conta a {parceiro} a coisa mais estranha que te aconteceu esta semana. Tenta arrancar-lhe uma gargalhada.",
+    "message_b": "{parceiro} vai contar-te uma história. Missão: não te rias, aconteça o que acontecer.",
+    "follow_up": "Quem ganhou? Agora telemóveis em baixo."
+  },
+  {
+    "id": "aa_famous_impression",
+    "type": "actor_audience",
+    "level": 1,
+    "tags": ["humor"],
+    "message_a": "Imita uma pessoa famosa à tua escolha para {parceiro}, sem dizer quem é. Tens 3 tentativas para te fazeres entender.",
+    "message_b": "{parceiro} vai imitar alguém famoso. Missão: só podes acertar à terceira tentativa, mesmo que saibas logo quem é.",
+    "follow_up": "Revelem as missões um ao outro. Telemóveis em baixo."
+  },
+  {
+    "id": "aa_childhood_story",
+    "type": "actor_audience",
+    "level": 1,
+    "tags": ["conversa"],
+    "message_a": "Conta a {parceiro} uma história de quando eras criança que nunca lhe contaste.",
+    "message_b": "Daqui a pouco {parceiro} vai contar-te uma história de infância. Missão: faz pelo menos 3 perguntas sobre essa história.",
+    "follow_up": "Agora é a vez de quem ouviu. Telemóveis em baixo."
+  },
+  {
+    "id": "aa_sell_object",
+    "type": "actor_audience",
+    "level": 1,
+    "tags": ["humor"],
+    "message_a": "Pega num objeto qualquer da sala e vende esse objeto a {parceiro} como se fosse o melhor produto do mundo.",
+    "message_b": "{parceiro} vai tentar vender-te alguma coisa. Missão: regateia o preço até ao ridículo.",
+    "follow_up": "Negócio fechado? Telemóveis em baixo."
+  },
+  {
+    "id": "aa_day_trailer",
+    "type": "actor_audience",
+    "level": 1,
+    "tags": ["humor", "conversa"],
+    "message_a": "Descreve o teu dia a {parceiro} como se fosse o trailer de um filme de ação. Voz grave obrigatória.",
+    "message_b": "{parceiro} vai apresentar-te um trailer. No fim, dá uma nota de 0 a 10 e faz uma crítica de cinema a sério.",
+    "follow_up": "Fim da sessão. Telemóveis em baixo."
+  },
+  {
+    "id": "sm_ananas",
+    "type": "secret_mission",
+    "level": 1,
+    "tags": ["jogo"],
+    "message_a": "Missão secreta: nos próximos 15 minutos consegue que {parceiro} diga a palavra 'ananás'. Sem a dizeres tu.",
+    "message_b": "Desconfia de todas as perguntas que {parceiro} te fizer nos próximos 15 minutos.",
+    "follow_up": "No fim, revelem as missões um ao outro."
+  },
+  {
+    "id": "sm_questions_only",
+    "type": "secret_mission",
+    "level": 1,
+    "tags": ["jogo", "humor"],
+    "message_a": "Missão secreta: nos próximos 10 minutos, responde a tudo o que {parceiro} disser com uma pergunta. Aguenta o máximo possível.",
+    "message_b": "Algo vai estar estranho na conversa com {parceiro}. Descobre o quê e diz \"apanhei-te!\"",
+    "follow_up": "Revelem as missões um ao outro. Telemóveis em baixo."
+  },
+  {
+    "id": "sm_hum_a_song",
+    "type": "secret_mission",
+    "level": 1,
+    "tags": ["jogo", "musica"],
+    "message_a": "Missão secreta: consegue que {parceiro} cante ou trauteie uma música nos próximos 15 minutos. Sem pedires diretamente.",
+    "message_b": "Nos próximos 15 minutos, cuidado com tudo o que soar a música.",
+    "follow_up": "No fim, revelem as missões um ao outro."
+  },
+  {
+    "id": "sm_penguin",
+    "type": "secret_mission",
+    "level": 1,
+    "tags": ["jogo"],
+    "message_a": "Missão secreta: usa a palavra 'pinguim' 3 vezes na conversa com {parceiro} sem que pareça estranho.",
+    "message_b": "{parceiro} tem uma palavra secreta para dizer várias vezes. Descobre qual é.",
+    "follow_up": "Descobriram? Contem tudo um ao outro e pousem os telemóveis."
+  },
+  {
+    "id": "sm_high_five",
+    "type": "secret_mission",
+    "level": 1,
+    "tags": ["jogo"],
+    "message_a": "Missão secreta: consegue um 'mais cinco' de {parceiro} nos próximos 10 minutos sem pedires diretamente.",
+    "message_b": "Nos próximos 10 minutos, {parceiro} vai tentar levar-te a fazer um gesto. Não caias.",
+    "follow_up": "No fim, revelem as missões um ao outro."
+  },
+  {
+    "id": "sm_mirror",
+    "type": "secret_mission",
+    "level": 1,
+    "tags": ["jogo"],
+    "message_a": "Missão secreta: imita discretamente os gestos de {parceiro} durante 5 minutos. Ganhas se não deres nas vistas.",
+    "message_b": "Repara bem nos movimentos de {parceiro} nos próximos minutos. Algo não bate certo.",
+    "follow_up": "Revelem as missões um ao outro. Telemóveis em baixo."
+  },
+  {
+    "id": "op_horror_movie",
+    "type": "opposing",
+    "level": 1,
+    "tags": ["filme"],
+    "message_a": "Convence {parceiro} a ver um filme de terror hoje. Tens 3 argumentos.",
+    "message_b": "{parceiro} vai tentar convencer-te de algo. Resiste até ouvires pelo menos 3 argumentos.",
+    "follow_up": "Decidam juntos e pousem os telemóveis."
+  },
+  {
+    "id": "op_pizza_dinner",
+    "type": "opposing",
+    "level": 1,
+    "tags": ["comida"],
+    "message_a": "Defende junto de {parceiro} que o jantar de amanhã deve ser pizza. Usa os melhores argumentos que tiveres.",
+    "message_b": "{parceiro} vai propor-te o jantar de amanhã. Defende outra opção qualquer até ao fim.",
+    "follow_up": "Cheguem a acordo a falar. Telemóveis em baixo."
+  },
+  {
+    "id": "op_pineapple_pizza",
+    "type": "opposing",
+    "level": 1,
+    "tags": ["comida", "humor"],
+    "message_a": "Defende perante {parceiro} que ananás na pizza é a melhor invenção culinária de sempre.",
+    "message_b": "{parceiro} vai defender uma opinião culinária polémica. O teu papel: discordar com toda a convicção.",
+    "follow_up": "Quem venceu o debate? Telemóveis em baixo."
+  },
+  {
+    "id": "op_cats_vs_dogs",
+    "type": "opposing",
+    "level": 1,
+    "tags": ["humor"],
+    "message_a": "Convence {parceiro} de que os gatos são melhores do que os cães. Tens 2 minutos.",
+    "message_b": "{parceiro} vai tentar convencer-te de algo sobre animais. Defende o lado contrário, seja qual for.",
+    "follow_up": "Empate técnico. Telemóveis em baixo."
+  },
+  {
+    "id": "op_weekend_home",
+    "type": "opposing",
+    "level": 1,
+    "tags": ["planos"],
+    "message_a": "Convence {parceiro} a passarem o próximo fim de semana sem sair de casa.",
+    "message_b": "{parceiro} tem um plano para o fim de semana. Contrapropõe uma aventura fora de casa.",
+    "follow_up": "Encontrem um meio-termo a falar. Telemóveis em baixo."
+  },
+  {
+    "id": "co_another_country",
+    "type": "coop",
+    "level": 1,
+    "tags": ["conversa", "viagem"],
+    "message_a": "Tens metade de uma pergunta: 'Se pudéssemos viver um ano noutro país...'",
+    "message_b": "Tens a outra metade: '...qual seria e o que farias lá primeiro?' Juntem as metades e respondam os dois.",
+    "follow_up": "Telemóveis em baixo, a conversa é vossa."
+  },
+  {
+    "id": "co_superpower",
+    "type": "coop",
+    "level": 1,
+    "tags": ["conversa"],
+    "message_a": "Tens metade de uma pergunta: 'Se pudesses ter um superpoder durante um dia...'",
+    "message_b": "Tens a outra metade: '...qual escolherias e o que farias primeiro?' Juntem as metades e respondam os dois.",
+    "follow_up": "Telemóveis em baixo, a conversa é vossa."
+  },
+  {
+    "id": "co_riddle_hole",
+    "type": "coop",
+    "level": 1,
+    "tags": ["enigma"],
+    "message_a": "Tens uma adivinha: 'Quanto mais se tira, maior fica. O que é?' {parceiro} tem a pista. Resolvam juntos.",
+    "message_b": "Tens a pista de uma adivinha que {parceiro} recebeu: 'Pode estar no chão ou no jardim.' Resolvam juntos.",
+    "follow_up": "Era um buraco. Telemóveis em baixo."
+  },
+  {
+    "id": "co_first_date",
+    "type": "coop",
+    "level": 1,
+    "tags": ["conversa", "memorias"],
+    "message_a": "Tens metade de uma pergunta: 'Do nosso primeiro encontro, qual é o pormenor...'",
+    "message_b": "Tens a outra metade: '...de que te lembras e achas que a outra pessoa já esqueceu?' Juntem as metades e respondam os dois.",
+    "follow_up": "Telemóveis em baixo, a conversa é vossa."
+  },
+  {
+    "id": "co_magic_room",
+    "type": "coop",
+    "level": 1,
+    "tags": ["conversa", "criativo"],
+    "message_a": "Tens metade de uma pergunta: 'Se a nossa casa pudesse ter uma divisão mágica...'",
+    "message_b": "Tens a outra metade: '...o que teria lá dentro?' Juntem as metades e desenhem essa divisão num papel.",
+    "follow_up": "Papel e caneta, telemóveis em baixo."
+  },
+  {
+    "id": "co_time_travel",
+    "type": "coop",
+    "level": 1,
+    "tags": ["conversa", "memorias"],
+    "message_a": "Tens metade de uma pergunta: 'Se pudéssemos voltar a um dia que vivemos juntos...'",
+    "message_b": "Tens a outra metade: '...qual escolheríamos e porquê?' Juntem as metades e respondam os dois.",
+    "follow_up": "Telemóveis em baixo, a conversa é vossa."
+  },
+  {
+    "id": "ki_specific_compliment",
+    "type": "kindness",
+    "level": 1,
+    "tags": ["elogio"],
+    "message_a": "Faz a {parceiro} um elogio sobre algo concreto que fez esta semana.",
+    "message_b": "Vais ouvir algo simpático em breve. Tenta adivinhar se a ideia foi de {parceiro} ou da app.",
+    "follow_up": "Agora é convosco."
+  },
+  {
+    "id": "ki_small_thanks",
+    "type": "kindness",
+    "level": 1,
+    "tags": ["elogio"],
+    "message_a": "Agradece a {parceiro} uma coisa pequena que fez recentemente e que talvez ache que não reparaste.",
+    "message_b": "Daqui a pouco {parceiro} vai dizer-te uma coisa simpática. Missão: aceita sem desvalorizar.",
+    "follow_up": "Agora é convosco. Telemóveis em baixo."
+  },
+  {
+    "id": "ki_surprise_drink",
+    "type": "kindness",
+    "level": 1,
+    "tags": ["gesto"],
+    "message_a": "Prepara uma bebida para {parceiro} sem perguntar o que quer. Aposta no que achas que prefere.",
+    "message_b": "Vem aí uma surpresa de {parceiro}. Missão: adivinha o que é antes de chegar.",
+    "follow_up": "Acertou? Bebam com calma e sem telemóveis."
+  },
+  {
+    "id": "ki_shoulder_massage",
+    "type": "kindness",
+    "level": 1,
+    "tags": ["gesto"],
+    "message_a": "Oferece a {parceiro} uma massagem de 2 minutos nos ombros. Sem pedir nada em troca.",
+    "message_b": "Algo de bom vem aí. Telemóvel em baixo e mãos livres.",
+    "follow_up": "Agora é convosco."
+  },
+  {
+    "id": "ki_shared_memory",
+    "type": "kindness",
+    "level": 1,
+    "tags": ["memorias"],
+    "message_a": "Conta a {parceiro} uma memória vossa de que gostas muito e explica porquê.",
+    "message_b": "{parceiro} vai partilhar uma memória contigo. No fim, conta uma tua também.",
+    "follow_up": "Telemóveis em baixo, a conversa é vossa."
+  },
+  {
+    "id": "ki_three_things",
+    "type": "kindness",
+    "level": 1,
+    "tags": ["elogio"],
+    "message_a": "Diz a {parceiro} três coisas que admiras na sua maneira de ser.",
+    "message_b": "Vais ouvir três coisas simpáticas. Missão: responde com uma tua.",
+    "follow_up": "Agora é convosco."
+  },
+  {
+    "id": "de_movie_night",
+    "type": "decision",
+    "level": 1,
+    "tags": ["filme"],
+    "message_a": "Hoje é noite de filme. Propõe três géneros a {parceiro}, que elimina um. Escolham a partir dos que sobram.",
+    "message_b": "{parceiro} vai propor-te uma noite de filme. Tu escolhes o snack.",
+    "follow_up": "Escolham a falar, não a fazer scroll."
+  },
+  {
+    "id": "de_dinner_tomorrow",
+    "type": "decision",
+    "level": 1,
+    "tags": ["comida"],
+    "message_a": "Propõe a {parceiro} três opções para o jantar de amanhã. A escolha final não é tua.",
+    "message_b": "{parceiro} vai dar-te 3 opções para o jantar de amanhã. Escolhe uma, mas só depois de ouvires as três.",
+    "follow_up": "Decidido. Telemóveis em baixo."
+  },
+  {
+    "id": "de_weekend_plan",
+    "type": "decision",
+    "level": 1,
+    "tags": ["planos"],
+    "message_a": "Propõe a {parceiro} três planos para o próximo fim de semana: um calmo, um aventureiro e um absurdo.",
+    "message_b": "{parceiro} vai propor-te planos para o fim de semana. Elimina um e escolham juntos entre os outros dois.",
+    "follow_up": "Plano feito. Telemóveis em baixo."
+  },
+  {
+    "id": "de_next_getaway",
+    "type": "decision",
+    "level": 1,
+    "tags": ["viagem", "planos"],
+    "message_a": "Sugere a {parceiro} três destinos para a próxima escapadinha. Nada de pesquisar no telemóvel.",
+    "message_b": "{parceiro} tem 3 destinos para uma escapadinha. Faz uma pergunta sobre cada um antes de escolher.",
+    "follow_up": "Sonhem a falar, pesquisem amanhã. Telemóveis em baixo."
+  },
+  {
+    "id": "de_sunday_breakfast",
+    "type": "decision",
+    "level": 1,
+    "tags": ["comida", "planos"],
+    "message_a": "Propõe a {parceiro} três ideias de pequeno-almoço para domingo.",
+    "message_b": "{parceiro} vai propor-te um pequeno-almoço especial. Escolhe uma ideia e decidam quem trata de quê.",
+    "follow_up": "Domingo resolvido. Telemóveis em baixo."
+  },
+  {
+    "id": "co_eye_contact",
+    "type": "coop",
+    "level": 2,
+    "tags": ["romantico"],
+    "message_a": "Desafio: olharem-se nos olhos durante 1 minuto, sem falar. Propõe a {parceiro} e começa a contar.",
+    "message_b": "{parceiro} vai propor-te um desafio de 1 minuto. Aceita e tenta não te rir.",
+    "follow_up": "Agora é convosco."
+  },
+  {
+    "id": "ki_slow_dance",
+    "type": "kindness",
+    "level": 2,
+    "tags": ["romantico", "musica"],
+    "message_a": "Põe uma música calma e convida {parceiro} para dançar na sala. Um minuto chega.",
+    "message_b": "Daqui a pouco vais receber um convite de {parceiro}. Diz que sim.",
+    "follow_up": "A música continua, os telemóveis não."
+  },
+  {
+    "id": "aa_first_impression",
+    "type": "actor_audience",
+    "level": 2,
+    "tags": ["romantico", "memorias"],
+    "message_a": "Conta a {parceiro} o que pensaste da primeira vez que se viram. Com toda a sinceridade.",
+    "message_b": "{parceiro} vai contar-te algo sobre o dia em que se conheceram. Depois é a tua vez.",
+    "follow_up": "Telemóveis em baixo, a conversa é vossa."
+  },
+  {
+    "id": "sm_unexpected_kiss",
+    "type": "secret_mission",
+    "level": 2,
+    "tags": ["romantico"],
+    "message_a": "Missão secreta: dá um beijo a {parceiro} num sítio inesperado (testa, nariz, mão) nos próximos 10 minutos.",
+    "message_b": "Nos próximos 10 minutos, fica de olho em {parceiro}. Anda a tramar alguma.",
+    "follow_up": "Agora é convosco."
+  },
+  {
+    "id": "de_date_night",
+    "type": "decision",
+    "level": 2,
+    "tags": ["romantico", "planos"],
+    "message_a": "Propõe a {parceiro} três ideias para um encontro a dois este mês, como se fosse o primeiro.",
+    "message_b": "{parceiro} vai convidar-te para um encontro. Escolhe uma das ideias e marquem a data já, a falar.",
+    "follow_up": "Encontro marcado. Telemóveis em baixo."
+  }
+]

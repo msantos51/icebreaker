@@ -34,3 +34,25 @@ A app usa módulos nativos, por isso corre num _development build_ e não no Exp
 cd app
 npx expo run:android   # ou run:ios
 ```
+
+## Backend local (Supabase)
+
+Requer o [Supabase CLI](https://supabase.com/docs/guides/local-development) e Docker.
+
+```bash
+supabase start                 # aplica as migrações e o seed das missões
+cp app/.env.example app/.env   # preencher com o URL e a anon key mostrados pelo comando acima
+```
+
+Os emails com o código de entrada aparecem no Inbucket local (http://127.0.0.1:54324).
+
+## Notificações
+
+As missões são enviadas pela Edge Function `trigger-mission` através do Expo Push.
+
+```bash
+npx eas-cli@latest init                       # cria o projeto EAS (projectId usado pelos push tokens)
+supabase functions serve trigger-mission      # local
+supabase functions deploy trigger-mission     # produção
+supabase secrets set EXPO_ACCESS_TOKEN=...    # opcional, se o Expo Push exigir autenticação
+```
