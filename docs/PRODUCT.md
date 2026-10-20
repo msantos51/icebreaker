@@ -131,6 +131,8 @@ Sem feed, sem histórico visível, sem pontuação.
 | 2026-10-20 | **Mensagem `follow_up`:** enviada como segunda notificação curta cerca de 1 minuto depois da missão.                                                                                                                                                   |
 | 2026-10-20 | **Período de silêncio (Fase 1):** apenas suprime as notificações da própria app; não mexe no Não Incomodar do sistema.                                                                                                                                 |
 | 2026-10-20 | **Fase 1:** a tabela `presence` fica para a Fase 2. É acrescentada uma tabela `push_tokens` para as notificações.                                                                                                                                      |
+| 2026-10-20 | **Nível por parceiro:** `couples` guarda `level_a` e `level_b` (o nível máximo que cada um aceita); o casal recebe o menor dos dois, para que níveis provocadores só se apliquem se os dois os ativarem.                                               |
+| 2026-10-20 | **"Hoje não" privado:** guardado em `profiles.snoozed_until`, visível só para o próprio. O catálogo de missões e o histórico (`mission_runs`) não são legíveis pelos clientes.                                                                         |
 
 ## 9. Decisões em aberto
 
