@@ -1,19 +1,32 @@
 import type { ReactNode } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Spacing, useColors } from '@/theme';
 
-/** Full-screen container: content on top, `footer` (usually the buttons) pinned to the bottom. */
-export function Screen({ children, footer }: { children: ReactNode; footer?: ReactNode }) {
+interface ScreenProps {
+  children: ReactNode;
+  /** Usually the buttons, pinned to the bottom. */
+  footer?: ReactNode;
+  /** Scrollable, top-aligned content (forms); otherwise content is centred. */
+  scroll?: boolean;
+}
+
+export function Screen({ children, footer, scroll }: ScreenProps) {
   const colors = useColors();
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.flex, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <View style={styles.content}>{children}</View>
+        {scroll ? (
+          <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+            {children}
+          </ScrollView>
+        ) : (
+          <View style={styles.content}>{children}</View>
+        )}
         {footer ? <View style={styles.footer}>{footer}</View> : null}
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -21,8 +34,8 @@ export function Screen({ children, footer }: { children: ReactNode; footer?: Rea
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1 },
   flex: { flex: 1 },
   content: { flex: 1, justifyContent: 'center', gap: Spacing.md, padding: Spacing.lg },
+  scroll: { gap: Spacing.md, padding: Spacing.lg },
   footer: { gap: Spacing.sm, padding: Spacing.lg },
 });

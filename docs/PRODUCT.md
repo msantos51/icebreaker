@@ -137,6 +137,7 @@ Sem feed, sem histórico visível, sem pontuação.
 | 2026-10-20 | **"Noite" e "hoje não":** o dia da app começa às 05:00 (hora local do casal), para que uma noite que passa da meia-noite conte como uma só. O limite de missões por noite é contado neste dia e o "hoje não" dura até às 05:00 seguintes. Por isso a janela horária não pode incluir as 05:00. |
 | 2026-10-20 | **Trigger manual fora da janela:** o botão "Estamos aborrecidos" funciona a qualquer hora (é um pedido explícito do casal), mas conta para o limite da noite e respeita o silêncio e o "hoje não". A janela horária só limita o trigger automático.                                            |
 | 2026-10-20 | **Escolha de missões:** só missões até ao nível do casal; primeiro as que nunca foram enviadas, depois a enviada há mais tempo; sempre que possível, de um tipo diferente da anterior.                                                                                                         |
+| 2026-10-20 | **Definições na Fase 1:** nomes, janela horária e nível (Leve/Romântico). O limite de minutos de uso só aparece na Fase 2, quando passar a ter efeito; o nível 3 ("picante") chega com os packs da Fase 4.                                                                                     |
 
 ## 9. Decisões em aberto
 
