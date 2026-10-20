@@ -138,6 +138,9 @@ Sem feed, sem histórico visível, sem pontuação.
 | 2026-10-20 | **Trigger manual fora da janela:** o botão "Estamos aborrecidos" funciona a qualquer hora (é um pedido explícito do casal), mas conta para o limite da noite e respeita o silêncio e o "hoje não". A janela horária só limita o trigger automático.                                            |
 | 2026-10-20 | **Escolha de missões:** só missões até ao nível do casal; primeiro as que nunca foram enviadas, depois a enviada há mais tempo; sempre que possível, de um tipo diferente da anterior.                                                                                                         |
 | 2026-10-20 | **Definições na Fase 1:** nomes, janela horária e nível (Leve/Romântico). O limite de minutos de uso só aparece na Fase 2, quando passar a ter efeito; o nível 3 ("picante") chega com os packs da Fase 4.                                                                                     |
+| 2026-10-21 | **Fase 2 (Android):** heartbeat por tarefa em segundo plano do sistema (WorkManager, ~15 min, sem notificação permanente), só dentro da janela do casal. O trigger automático só funciona se os dois tiverem Android; os restantes casais ficam com o botão manual até à Fase 3.               |
+| 2026-10-21 | **Sinais de presença:** "juntos" = mesmo hash HMAC do IP público (o IP nunca é guardado); sinais válidos durante 20 min; o uso reportado não é extrapolado. O Não Incomodar reportado também bloqueia o trigger manual.                                                                        |
+| 2026-10-21 | **Minutos sem telemóvel:** desde que o telemóvel é pousado (até 10 min depois da missão) até voltar a ser usado; olhadelas < 30 s não contam; máximo 120 min; guarda-se o menor dos dois.                                                                                                      |
 
 ## 9. Decisões em aberto
 

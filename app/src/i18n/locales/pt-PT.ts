@@ -76,6 +76,11 @@ const ptPT = {
     enable: 'Ativar notificações',
     openSettings: 'Abrir definições',
   },
+  usageAccess: {
+    title: 'Deteção automática',
+    body: 'Para perceber quando estão os dois agarrados ao telemóvel, a app precisa de acesso de utilização. Só lê quando o ecrã liga e desliga, nunca que apps usas, e isso fica no telemóvel.',
+    grant: 'Dar acesso',
+  },
   home: {
     tagline: 'Esta app quer ser pouco usada.',
     bored: 'Estamos aborrecidos',
@@ -95,6 +100,12 @@ const ptPT = {
     to: 'Às',
     earlier: 'Mais cedo',
     later: 'Mais tarde',
+    usage: 'Tempo ao telemóvel',
+    usageHint:
+      'A missão automática chega quando os dois estão há este tempo seguido ao telemóvel. Por agora só funciona se os dois tiverem Android.',
+    usageValue: '{{count}} min',
+    less: 'Menos',
+    more: 'Mais',
     level: 'Nível das missões',
     levelHint:
       'Cada um escolhe o seu. Vale o mais baixo dos dois, por isso só sobe se ambos quiserem.',

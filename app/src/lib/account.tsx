@@ -1,5 +1,6 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
+import { rememberCoupleWindow } from './background';
 import { useSession } from './session';
 import { supabase } from './supabase';
 
@@ -73,7 +74,11 @@ async function load(userId: string): Promise<Omit<AccountState, 'refresh'>> {
     supabase.from('profiles').select('*').eq('id', userId).maybeSingle<Profile>(),
     supabase.from('couples').select('*').maybeSingle<Couple>(),
   ]);
-  return { profile: profile.data, couple: couple.data, loading: false };
+  const c = couple.data;
+  await rememberCoupleWindow(
+    c ? { timezone: c.timezone, windowStart: c.window_start, windowEnd: c.window_end } : null,
+  ).catch(() => {});
+  return { profile: profile.data, couple: c, loading: false };
 }
 
 export function useAccount(): AccountState {

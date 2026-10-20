@@ -17,6 +17,9 @@ import { supabase } from '@/lib/supabase';
 import { Spacing, useColors } from '@/theme';
 
 const WINDOW_STEP_MIN = 30;
+const USAGE_STEP_MIN = 5;
+const USAGE_MIN = 10;
+const USAGE_MAX = 60;
 /** Level 3 ("picante") arrives with the paid packs (Phase 4). */
 const LEVELS = [1, 2] as const;
 
@@ -31,6 +34,7 @@ export default function SettingsScreen() {
   const [windowStart, setWindowStart] = useState(toHHMM(couple!.window_start));
   const [windowEnd, setWindowEnd] = useState(toHHMM(couple!.window_end));
   const [level, setLevel] = useState<number>(couple![myLevelColumn]);
+  const [usageThreshold, setUsageThreshold] = useState(couple!.usage_threshold_min);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -46,7 +50,7 @@ export default function SettingsScreen() {
       timezone: couple!.timezone,
       windowStart,
       windowEnd,
-      usageThresholdMin: couple!.usage_threshold_min,
+      usageThresholdMin: usageThreshold,
       silencePeriodMin: couple!.silence_period_min,
       maxMissionsPerNight: couple!.max_missions_per_night,
     });
@@ -63,7 +67,12 @@ export default function SettingsScreen() {
         .eq('id', profile!.id),
       supabase
         .from('couples')
-        .update({ window_start: windowStart, window_end: windowEnd, [myLevelColumn]: level })
+        .update({
+          window_start: windowStart,
+          window_end: windowEnd,
+          usage_threshold_min: usageThreshold,
+          [myLevelColumn]: level,
+        })
         .eq('id', couple!.id),
     ]);
     setSaving(false);
@@ -144,6 +153,17 @@ export default function SettingsScreen() {
         onIncrement={() => setWindowEnd(shiftClock(windowEnd, WINDOW_STEP_MIN))}
         decrementLabel={t('settings.earlier')}
         incrementLabel={t('settings.later')}
+      />
+
+      {section(t('settings.usage'))}
+      <Body>{t('settings.usageHint')}</Body>
+      <Stepper
+        label={t('settings.usage')}
+        value={t('settings.usageValue', { count: usageThreshold })}
+        onDecrement={() => setUsageThreshold(Math.max(USAGE_MIN, usageThreshold - USAGE_STEP_MIN))}
+        onIncrement={() => setUsageThreshold(Math.min(USAGE_MAX, usageThreshold + USAGE_STEP_MIN))}
+        decrementLabel={t('settings.less')}
+        incrementLabel={t('settings.more')}
       />
 
       {section(t('settings.level'))}
