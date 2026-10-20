@@ -11,6 +11,7 @@ import { Stepper } from '@/components/Stepper';
 import { Body, ErrorText, Title } from '@/components/Text';
 import { TextField } from '@/components/TextField';
 import { useAccount } from '@/lib/account';
+import { disableAutoDetection } from '@/lib/background';
 import { shiftClock, toHHMM } from '@/lib/clock';
 import { cleanName, isValidName, NAME_MAX_LENGTH } from '@/lib/profile';
 import { supabase } from '@/lib/supabase';
@@ -96,8 +97,12 @@ export default function SettingsScreen() {
             .from('couples')
             .delete()
             .eq('id', couple!.id);
-          if (deleteError) Alert.alert(t('common.genericError'));
-          else await refresh();
+          if (deleteError) {
+            Alert.alert(t('common.genericError'));
+            return;
+          }
+          await disableAutoDetection().catch(console.warn);
+          await refresh();
         },
       },
     ]);
@@ -182,7 +187,10 @@ export default function SettingsScreen() {
       <Button
         variant="secondary"
         label={t('settings.signOut')}
-        onPress={() => supabase.auth.signOut()}
+        onPress={async () => {
+          await disableAutoDetection().catch(console.warn);
+          await supabase.auth.signOut();
+        }}
       />
     </Screen>
   );
