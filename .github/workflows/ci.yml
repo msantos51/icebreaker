@@ -36,5 +36,9 @@ jobs:
       - run: npm ci
       - run: npx expo prebuild --platform android --no-install
         working-directory: app
-      - run: ./gradlew :usage-stats:compileDebugKotlin --no-daemon
+      - name: Check the local module is linked
         working-directory: app/android
+        run: ./gradlew projects --no-daemon | tee projects.txt && grep -i "usage-stats" projects.txt
+      - name: Compile Kotlin (app and native modules)
+        working-directory: app/android
+        run: ./gradlew :app:compileDebugKotlin --no-daemon
