@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "app",
-    "packages/*"
+    "packages/*",
+    "supabase"
   ],
   "scripts": {
     "lint": "npm run lint --workspaces --if-present",
