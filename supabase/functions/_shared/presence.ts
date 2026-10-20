@@ -43,3 +43,41 @@ export async function hashIp(ip: string, secret: string): Promise<string> {
   const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(ip));
   return Array.from(new Uint8Array(signature), (b) => b.toString(16).padStart(2, '0')).join('');
 }
+
+/** A mission is measured for at most 10 min (put down) + 120 min (cap): 3 h is enough. */
+export const MEASUREMENT_MAX_AGE_MS = 3 * 60 * 60_000;
+
+export interface RecentRun {
+  id: string;
+  sentAt: Date;
+}
+
+/**
+ * The run the phone should measure off-phone minutes for, if any. Both partners received the
+ * mission, so telling them when it was sent reveals nothing new.
+ */
+export function runToMeasure(latest: RecentRun | null, now: Date): RecentRun | null {
+  if (!latest) return null;
+  return now.getTime() - latest.sentAt.getTime() <= MEASUREMENT_MAX_AGE_MS ? latest : null;
+}
+
+export interface OffPhoneReport {
+  runId: string;
+  minutes: number;
+}
+
+export function parseOffPhoneReport(body: unknown): OffPhoneReport | null {
+  if (typeof body !== 'object' || body === null) return null;
+  const { runId, minutes } = body as Record<string, unknown>;
+  if (
+    typeof runId !== 'string' ||
+    !/^[0-9a-f-]{36}$/i.test(runId) ||
+    typeof minutes !== 'number' ||
+    !Number.isInteger(minutes) ||
+    minutes < 0 ||
+    minutes > 120
+  ) {
+    return null;
+  }
+  return { runId, minutes };
+}

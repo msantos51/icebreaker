@@ -62,4 +62,5 @@ O trigger automático (Android) usa a função `heartbeat`, que guarda só um ha
 ```bash
 supabase secrets set PRESENCE_IP_SECRET=$(openssl rand -hex 32)
 supabase functions deploy heartbeat
+supabase functions deploy report-offphone   # métrica: minutos sem telemóvel
 ```

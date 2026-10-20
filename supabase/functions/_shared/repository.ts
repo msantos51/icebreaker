@@ -117,3 +117,33 @@ export async function upsertPresence(
   });
   if (error) throw error;
 }
+
+/** The couple's latest mission run, if any (service role only). */
+export async function getLatestRun(
+  db: SupabaseClient,
+  coupleId: string,
+): Promise<{ id: string; sentAt: Date } | null> {
+  const { data, error } = await db
+    .from('mission_runs')
+    .select('id, sent_at')
+    .eq('couple_id', coupleId)
+    .order('sent_at', { ascending: false })
+    .limit(1)
+    .maybeSingle<{ id: string; sent_at: string }>();
+  if (error) throw error;
+  return data ? { id: data.id, sentAt: new Date(data.sent_at) } : null;
+}
+
+/** Records one partner's off-phone minutes; false if the run is not theirs. */
+export async function reportOffPhoneMinutes(
+  db: SupabaseClient,
+  report: { runId: string; userId: string; minutes: number },
+): Promise<boolean> {
+  const { data, error } = await db.rpc('report_offphone_minutes', {
+    p_run_id: report.runId,
+    p_user_id: report.userId,
+    p_minutes: report.minutes,
+  });
+  if (error) throw error;
+  return data === true;
+}

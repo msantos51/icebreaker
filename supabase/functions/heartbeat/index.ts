@@ -1,13 +1,15 @@
 // Heartbeat from an Android phone, sent by a background task inside the couple's window.
 // Stores only aggregated signals (hashed IP, continuous usage minutes, DND) and then evaluates the
-// automatic trigger for the couple. The response never says whether a mission was sent.
+// automatic trigger for the couple. The response never says whether a mission was sent by this
+// heartbeat; it only returns the couple's latest mission (both partners received it) so the phone
+// can measure how long it stayed down afterwards.
 
 import { createClient } from '@supabase/supabase-js';
 
 import { createExpoPushSender } from '../_shared/expo-push.ts';
 import { authenticate, json, scheduleWithEdgeRuntime } from '../_shared/http.ts';
-import { clientIp, hashIp, parseHeartbeat } from '../_shared/presence.ts';
-import { createSupabaseRepository, upsertPresence } from '../_shared/repository.ts';
+import { clientIp, hashIp, parseHeartbeat, runToMeasure } from '../_shared/presence.ts';
+import { createSupabaseRepository, getLatestRun, upsertPresence } from '../_shared/repository.ts';
 import { sendAutoMission } from '../_shared/send-mission.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
@@ -37,12 +39,16 @@ Deno.serve(async (request) => {
     dnd: input.dnd,
   });
 
+  const repo = createSupabaseRepository(admin);
   const outcome = await sendAutoMission(userId, {
-    repo: createSupabaseRepository(admin),
+    repo,
     push: createExpoPushSender(EXPO_ACCESS_TOKEN),
     now: () => new Date(),
     schedule: scheduleWithEdgeRuntime,
   });
   console.log(JSON.stringify({ event: 'heartbeat', ...outcome }));
-  return json({ ok: true });
+
+  const couple = await repo.getCoupleForUser(userId);
+  const run = couple ? runToMeasure(await getLatestRun(admin, couple.id), new Date()) : null;
+  return json({ ok: true, measure: run && { runId: run.id, sentAt: run.sentAt.toISOString() } });
 });
