@@ -1,9 +1,9 @@
+import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/Button';
 import { Screen } from '@/components/Screen';
 import { Body, Title } from '@/components/Text';
-import { supabase } from '@/lib/supabase';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -12,8 +12,8 @@ export default function HomeScreen() {
       footer={
         <Button
           variant="secondary"
-          label={t('home.signOut')}
-          onPress={() => supabase.auth.signOut()}
+          label={t('home.settings')}
+          onPress={() => router.push('/settings')}
         />
       }
     >
