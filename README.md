@@ -64,3 +64,21 @@ supabase secrets set PRESENCE_IP_SECRET=$(openssl rand -hex 32)
 supabase functions deploy heartbeat
 supabase functions deploy report-offphone   # métrica: minutos sem telemóvel
 ```
+
+## Gerar a app Android (AAB/APK)
+
+O workflow **Android release** (GitHub Actions) gera o `.aab` (Play Store) e o `.apk` (instalar diretamente):
+
+- **Actions → Android release → Run workflow**: os ficheiros ficam no fim da execução, em _Artifacts_.
+- **Tag `v*`** (ex.: `git tag v0.1.0 && git push origin v0.1.0`): ficam também numa _Release_ do GitHub.
+
+Secrets necessários (_Settings → Secrets and variables → Actions_):
+
+| Secret                                                                   | O que é                                                                                                                                                   |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `EXPO_PUBLIC_SUPABASE_URL`                                               | URL do projeto Supabase                                                                                                                                   |
+| `EXPO_PUBLIC_SUPABASE_ANON_KEY`                                          | Anon key do projeto Supabase                                                                                                                              |
+| `EAS_PROJECT_ID`                                                         | ID do projeto EAS (`npx eas-cli init`), usado pelos push tokens                                                                                           |
+| `GOOGLE_SERVICES_JSON`                                                   | Conteúdo do `google-services.json` do Firebase (notificações no Android)                                                                                  |
+| `ANDROID_KEYSTORE_BASE64`                                                | Opcional: upload key em base64 (`base64 -w0 upload.jks`). Sem ela, a app é assinada com a chave de debug, que serve para testes mas não para a Play Store |
+| `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | Opcionais: dados da upload key                                                                                                                            |
