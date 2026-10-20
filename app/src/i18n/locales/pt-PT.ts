@@ -70,6 +70,12 @@ const ptPT = {
       generic: 'Algo correu mal. Tenta outra vez.',
     },
   },
+  notifications: {
+    title: 'Ativa as notificações',
+    body: 'As missões chegam por notificação. Sem elas, a app não consegue fazer nada.',
+    enable: 'Ativar notificações',
+    openSettings: 'Abrir definições',
+  },
   home: {
     tagline: 'Esta app quer ser pouco usada.',
     settings: 'Definições',
