@@ -1,0 +1,20 @@
+# Local development config for the Supabase CLI (`supabase start`). Only the settings that differ
+# from the CLI defaults are listed here.
+project_id = "icebreaker"
+
+[auth]
+site_url = "icebreaker://"
+
+[auth.email]
+enable_signup = true
+# Sign-in with a 6-digit code sent by email (no passwords, no magic links).
+otp_length = 6
+otp_expiry = 900
+
+[auth.email.template.magic_link]
+subject = "O teu código IceBreaker"
+content_path = "./supabase/templates/otp.html"
+
+[auth.email.template.confirmation]
+subject = "O teu código IceBreaker"
+content_path = "./supabase/templates/otp.html"
