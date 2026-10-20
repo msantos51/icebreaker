@@ -7,6 +7,7 @@ import { Button } from '@/components/Button';
 import { NotificationsPrompt } from '@/components/NotificationsPrompt';
 import { Screen } from '@/components/Screen';
 import { Body, ErrorText, Title } from '@/components/Text';
+import { UsageAccessPrompt } from '@/components/UsageAccessPrompt';
 import { useAccount } from '@/lib/account';
 import { supabase } from '@/lib/supabase';
 
@@ -86,6 +87,7 @@ export default function HomeScreen() {
       {message ? <Body>{message}</Body> : null}
       {error ? <ErrorText>{error}</ErrorText> : null}
       <NotificationsPrompt />
+      <UsageAccessPrompt />
     </Screen>
   );
 }
