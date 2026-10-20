@@ -1,0 +1,28 @@
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { Spacing, useColors } from '@/theme';
+
+export default function HomeScreen() {
+  const { t } = useTranslation();
+  const colors = useColors();
+
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>{t('common.appName')}</Text>
+      <Text style={{ color: colors.textSecondary }}>{t('home.tagline')}</Text>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.sm,
+    padding: Spacing.lg,
+  },
+  title: { fontSize: 32, fontWeight: '700' },
+});
