@@ -1,0 +1,22 @@
+{
+  "name": "@icebreaker/supabase",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && deno check --config functions/trigger-mission/deno.json functions/trigger-mission/index.ts",
+    "seed:build": "node scripts/seed.ts"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "@supabase/supabase-js": "^2.118.0",
+    "@types/node": "^22.20.5",
+    "deno": "^2.9.6",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "@icebreaker/core": "*"
+  }
+}

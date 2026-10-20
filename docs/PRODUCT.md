@@ -27,14 +27,14 @@ Métricas a **não** otimizar: tempo na app, sessões, aberturas.
 
 Cada missão é um par de mensagens, uma para cada parceiro, enviadas quase em simultâneo. Cada um sabe apenas uma parte.
 
-| Tipo | Descrição |
-|------|-----------|
-| `actor_audience` | Um faz algo (contar piada); o outro tem uma instrução secreta de reação. |
+| Tipo             | Descrição                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------- |
+| `actor_audience` | Um faz algo (contar piada); o outro tem uma instrução secreta de reação.                             |
 | `secret_mission` | Um tem um objetivo secreto (fazer o outro dizer uma palavra); o outro recebe uma pista vaga ou nada. |
-| `opposing` | Os dois têm objetivos opostos (convencer vs resistir). |
-| `coop` | Cada um recebe metade de uma pergunta/enigma; só resolvem juntos. |
-| `kindness` | Um faz um gesto/elogio; o outro é avisado que vem aí algo simpático. |
-| `decision` | Decidir algo juntos a falar (filme, jantar, plano do fim de semana) a partir de 3 opções. |
+| `opposing`       | Os dois têm objetivos opostos (convencer vs resistir).                                               |
+| `coop`           | Cada um recebe metade de uma pergunta/enigma; só resolvem juntos.                                    |
+| `kindness`       | Um faz um gesto/elogio; o outro é avisado que vem aí algo simpático.                                 |
+| `decision`       | Decidir algo juntos a falar (filme, jantar, plano do fim de semana) a partir de 3 opções.            |
 
 Cada mensagem tem no máximo ~200 caracteres para caber inteira na notificação.
 
@@ -124,13 +124,20 @@ Sem feed, sem histórico visível, sem pontuação.
 
 ## 8. Decisões tomadas
 
-| Data | Decisão |
-|------|---------|
-| 2026-10-20 | **Autenticação:** login por código enviado por email (OTP do Supabase), sem palavra-passe. |
-| 2026-10-20 | **Botão "Estamos aborrecidos":** respeita o limite por noite, o período de silêncio e o "hoje não"/Não Incomodar de ambos. Quando não pode disparar, mostra uma mensagem genérica ("Agora não dá, tentem mais logo") sem revelar o motivo ao parceiro. |
-| 2026-10-20 | **Mensagem `follow_up`:** enviada como segunda notificação curta cerca de 1 minuto depois da missão. |
-| 2026-10-20 | **Período de silêncio (Fase 1):** apenas suprime as notificações da própria app; não mexe no Não Incomodar do sistema. |
-| 2026-10-20 | **Fase 1:** a tabela `presence` fica para a Fase 2. É acrescentada uma tabela `push_tokens` para as notificações. |
+| Data       | Decisão                                                                                                                                                                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-10-20 | **Autenticação:** login por código enviado por email (OTP do Supabase), sem palavra-passe.                                                                                                                                                                                                     |
+| 2026-10-20 | **Botão "Estamos aborrecidos":** respeita o limite por noite, o período de silêncio e o "hoje não"/Não Incomodar de ambos. Quando não pode disparar, mostra uma mensagem genérica ("Agora não dá, tentem mais logo") sem revelar o motivo ao parceiro.                                         |
+| 2026-10-20 | **Mensagem `follow_up`:** enviada como segunda notificação curta cerca de 1 minuto depois da missão.                                                                                                                                                                                           |
+| 2026-10-20 | **Período de silêncio (Fase 1):** apenas suprime as notificações da própria app; não mexe no Não Incomodar do sistema.                                                                                                                                                                         |
+| 2026-10-20 | **Fase 1:** a tabela `presence` fica para a Fase 2. É acrescentada uma tabela `push_tokens` para as notificações.                                                                                                                                                                              |
+| 2026-10-20 | **Nível por parceiro:** `couples` guarda `level_a` e `level_b` (o nível máximo que cada um aceita); o casal recebe o menor dos dois, para que níveis provocadores só se apliquem se os dois os ativarem.                                                                                       |
+| 2026-10-20 | **"Hoje não" privado:** guardado em `profiles.snoozed_until`, visível só para o próprio. O catálogo de missões e o histórico (`mission_runs`) não são legíveis pelos clientes.                                                                                                                 |
+| 2026-10-20 | **Catálogo de missões:** fonte única em `supabase/missions/catalog.pt-PT.json`, validado automaticamente (≤200 caracteres, só `{parceiro}`, linguagem neutra). Duas missões de exemplo foram ajustadas por assumirem género ("deixa-o eliminar um", "fazê-lo rir").                            |
+| 2026-10-20 | **"Noite" e "hoje não":** o dia da app começa às 05:00 (hora local do casal), para que uma noite que passa da meia-noite conte como uma só. O limite de missões por noite é contado neste dia e o "hoje não" dura até às 05:00 seguintes. Por isso a janela horária não pode incluir as 05:00. |
+| 2026-10-20 | **Trigger manual fora da janela:** o botão "Estamos aborrecidos" funciona a qualquer hora (é um pedido explícito do casal), mas conta para o limite da noite e respeita o silêncio e o "hoje não". A janela horária só limita o trigger automático.                                            |
+| 2026-10-20 | **Escolha de missões:** só missões até ao nível do casal; primeiro as que nunca foram enviadas, depois a enviada há mais tempo; sempre que possível, de um tipo diferente da anterior.                                                                                                         |
+| 2026-10-20 | **Definições na Fase 1:** nomes, janela horária e nível (Leve/Romântico). O limite de minutos de uso só aparece na Fase 2, quando passar a ter efeito; o nível 3 ("picante") chega com os packs da Fase 4.                                                                                     |
 
 ## 9. Decisões em aberto
 
