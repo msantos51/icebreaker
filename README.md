@@ -56,3 +56,10 @@ supabase functions serve trigger-mission      # local
 supabase functions deploy trigger-mission     # produção
 supabase secrets set EXPO_ACCESS_TOKEN=...    # opcional, se o Expo Push exigir autenticação
 ```
+
+O trigger automático (Android) usa a função `heartbeat`, que guarda só um hash do IP público:
+
+```bash
+supabase secrets set PRESENCE_IP_SECRET=$(openssl rand -hex 32)
+supabase functions deploy heartbeat
+```

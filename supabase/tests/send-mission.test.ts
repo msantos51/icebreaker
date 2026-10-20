@@ -4,9 +4,11 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import {
   type CoupleRow,
   type MissionRepository,
+  type PresenceRow,
   type ProfileRow,
   type PushMessage,
   type PushResult,
+  sendAutoMission,
   sendManualMission,
   type SendMissionDeps,
 } from '../functions/_shared/send-mission.ts';
@@ -51,6 +53,7 @@ class FakeRepo implements MissionRepository {
     { userId: ALICE, token: 'alice-phone' },
     { userId: BOB, token: 'bob-phone' },
   ];
+  presence: PresenceRow[] = [];
   runs: { coupleId: string; missionId: string; roleAUserId: string; source: string }[] = [];
   deleted: string[] = [];
   raceLost = false;
@@ -71,6 +74,9 @@ class FakeRepo implements MissionRepository {
   }
   async getPushTokens(userIds: string[]) {
     return this.tokens.filter((t) => userIds.includes(t.userId));
+  }
+  async getPresence(userIds: string[]) {
+    return this.presence.filter((p) => userIds.includes(p.userId));
   }
   async startRun(run: {
     coupleId: string;
@@ -207,5 +213,76 @@ describe('sendManualMission', () => {
       m.to === 'bob-phone' ? { ok: false, deviceNotRegistered: true } : { ok: true };
     await sendManualMission(ALICE, deps);
     expect(repo.deleted).toEqual(['bob-phone']);
+  });
+});
+
+describe('sendAutoMission', () => {
+  const seen = (userId: string, overrides: Partial<PresenceRow> = {}): PresenceRow => ({
+    userId,
+    publicIpHash: 'home',
+    continuousUsageMin: 25,
+    dnd: false,
+    updatedAt: new Date('2026-12-01T20:55:00Z'),
+    ...overrides,
+  });
+
+  it('fires when both are home, scrolling for 20+ minutes, inside the window', async () => {
+    repo.presence = [seen(ALICE), seen(BOB)];
+    expect(await sendAutoMission(ALICE, deps)).toMatchObject({ status: 'sent' });
+    expect(repo.runs[0]!.source).toBe('auto');
+  });
+
+  it('needs both phones on the same network', async () => {
+    repo.presence = [seen(ALICE), seen(BOB, { publicIpHash: 'office' })];
+    expect(await sendAutoMission(ALICE, deps)).toEqual({
+      status: 'blocked',
+      reasons: ['not_together'],
+    });
+  });
+
+  it('needs both above the usage threshold', async () => {
+    repo.presence = [seen(ALICE), seen(BOB, { continuousUsageMin: 5 })];
+    expect(await sendAutoMission(ALICE, deps)).toEqual({
+      status: 'blocked',
+      reasons: ['usage_below_threshold'],
+    });
+  });
+
+  it('ignores stale heartbeats', async () => {
+    repo.presence = [seen(ALICE), seen(BOB, { updatedAt: new Date('2026-12-01T20:00:00Z') })];
+    expect(await sendAutoMission(ALICE, deps)).toEqual({
+      status: 'blocked',
+      reasons: ['not_together', 'usage_below_threshold'],
+    });
+  });
+
+  it('never fires for a partner without presence (e.g. an iPhone before Phase 3)', async () => {
+    repo.presence = [seen(ALICE)];
+    expect(await sendAutoMission(ALICE, deps)).toMatchObject({ status: 'blocked' });
+    expect(push.batches).toEqual([]);
+  });
+
+  it('respects Do Not Disturb, for automatic and manual triggers', async () => {
+    repo.presence = [seen(ALICE), seen(BOB, { dnd: true })];
+    expect(await sendAutoMission(ALICE, deps)).toEqual({
+      status: 'blocked',
+      reasons: ['do_not_disturb'],
+    });
+    expect(await sendManualMission(ALICE, deps)).toEqual({
+      status: 'blocked',
+      reasons: ['do_not_disturb'],
+    });
+  });
+
+  it('only fires inside the window', async () => {
+    repo.presence = [
+      seen(ALICE, { updatedAt: new Date('2026-12-01T15:55:00Z') }),
+      seen(BOB, { updatedAt: new Date('2026-12-01T15:55:00Z') }),
+    ];
+    deps.now = () => new Date('2026-12-01T16:00:00Z');
+    expect(await sendAutoMission(ALICE, deps)).toEqual({
+      status: 'blocked',
+      reasons: ['outside_window'],
+    });
   });
 });

@@ -1,7 +1,7 @@
 import type { Mission } from '@icebreaker/core';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { CoupleRow, MissionRepository, ProfileRow } from './send-mission.ts';
+import type { CoupleRow, MissionRepository, PresenceRow, ProfileRow } from './send-mission.ts';
 
 /** How many past runs are considered when choosing the next mission. */
 const HISTORY_LIMIT = 500;
@@ -61,6 +61,30 @@ export function createSupabaseRepository(db: SupabaseClient): MissionRepository 
       return data.map((r) => ({ userId: r.user_id, token: r.token }));
     },
 
+    async getPresence(userIds) {
+      const { data, error } = await db
+        .from('presence')
+        .select('user_id, public_ip_hash, continuous_usage_min, dnd, updated_at')
+        .in('user_id', userIds)
+        .returns<
+          {
+            user_id: string;
+            public_ip_hash: string;
+            continuous_usage_min: number;
+            dnd: boolean;
+            updated_at: string;
+          }[]
+        >();
+      if (error) throw error;
+      return data.map((r): PresenceRow => ({
+        userId: r.user_id,
+        publicIpHash: r.public_ip_hash,
+        continuousUsageMin: r.continuous_usage_min,
+        dnd: r.dnd,
+        updatedAt: new Date(r.updated_at),
+      }));
+    },
+
     async startRun({ coupleId, missionId, roleAUserId, source }) {
       const { data, error } = await db.rpc('start_mission_run', {
         p_couple_id: coupleId,
@@ -77,4 +101,19 @@ export function createSupabaseRepository(db: SupabaseClient): MissionRepository 
       if (error) throw error;
     },
   };
+}
+
+/** Stores the latest aggregated signals from one phone (service role only). */
+export async function upsertPresence(
+  db: SupabaseClient,
+  presence: { userId: string; publicIpHash: string; continuousUsageMin: number; dnd: boolean },
+): Promise<void> {
+  const { error } = await db.from('presence').upsert({
+    user_id: presence.userId,
+    public_ip_hash: presence.publicIpHash,
+    continuous_usage_min: presence.continuousUsageMin,
+    dnd: presence.dnd,
+    updated_at: new Date().toISOString(),
+  });
+  if (error) throw error;
 }

@@ -2,16 +2,20 @@
 // Function provides the database and push implementations, and tests provide fakes.
 
 import {
+  areTogether,
   assignRoles,
   type CoupleSettings,
   effectiveLevel,
   evaluateTrigger,
   FOLLOW_UP_DELAY_SECONDS,
+  isFresh,
   type Mission,
   pickMission,
+  type PresenceSignal,
   type PreviousRun,
   type Random,
   renderMessage,
+  reportedUsageMinutes,
   type TriggerDecision,
   type TriggerSource,
 } from '@icebreaker/core';
@@ -37,6 +41,10 @@ export interface ProfileRow {
   snoozed_until: string | null;
 }
 
+export interface PresenceRow extends PresenceSignal {
+  userId: string;
+}
+
 export interface PushToken {
   userId: string;
   token: string;
@@ -48,6 +56,8 @@ export interface MissionRepository {
   getRunHistory(coupleId: string): Promise<PreviousRun[]>;
   getActiveMissions(): Promise<Mission[]>;
   getPushTokens(userIds: string[]): Promise<PushToken[]>;
+  /** Aggregated signals from the phones (Phase 2). Only Android phones send them. */
+  getPresence(userIds: string[]): Promise<PresenceRow[]>;
   /** Atomically records the run; null if another mission was started in the meantime. */
   startRun(run: {
     coupleId: string;
@@ -106,6 +116,11 @@ export async function sendManualMission(userId: string, deps: SendMissionDeps) {
   return sendMission(userId, 'manual', deps);
 }
 
+/** Evaluates the automatic trigger for `userId`'s couple, after one of their phones reported in. */
+export async function sendAutoMission(userId: string, deps: SendMissionDeps) {
+  return sendMission(userId, 'auto', deps);
+}
+
 async function sendMission(
   userId: string,
   source: TriggerSource,
@@ -115,19 +130,24 @@ async function sendMission(
   if (!couple) return { status: 'not_paired' };
   const partnerIds = [couple.user_a_id, couple.user_b_id] as const;
 
-  const [profiles, history] = await Promise.all([
+  const [profiles, history, presence] = await Promise.all([
     repo.getProfiles([...partnerIds]),
     repo.getRunHistory(couple.id),
+    repo.getPresence([...partnerIds]),
   ]);
   const profileOf = (id: string) => profiles.find((p) => p.id === id);
+  const presenceOf = (id: string) => presence.find((p) => p.userId === id) ?? null;
+  const at = now();
 
   const decision = evaluateTrigger({
-    now: now(),
+    now: at,
     source,
     settings: toSettings(couple),
-    partners: [partnerState(profileOf(partnerIds[0])), partnerState(profileOf(partnerIds[1]))],
-    // Phase 1 has no presence or usage detection: these only matter for automatic triggers.
-    together: false,
+    partners: [
+      partnerState(profileOf(partnerIds[0]), presenceOf(partnerIds[0]), at),
+      partnerState(profileOf(partnerIds[1]), presenceOf(partnerIds[1]), at),
+    ],
+    together: areTogether(presenceOf(partnerIds[0]), presenceOf(partnerIds[1]), at),
     previousRuns: history.map((r) => r.sentAt),
   });
   if (!decision.allowed) return { status: 'blocked', reasons: decision.reasons };
@@ -178,11 +198,12 @@ async function sendMission(
   return { status: 'sent', runId, missionId: mission.id };
 }
 
-function partnerState(profile: ProfileRow | undefined) {
+function partnerState(profile: ProfileRow | undefined, presence: PresenceRow | null, now: Date) {
   return {
     snoozedUntil: profile?.snoozed_until ? new Date(profile.snoozed_until) : null,
-    doNotDisturb: false,
-    continuousUsageMin: null,
+    // Only trusted while fresh. iPhones send no presence yet, so they never count as in DND.
+    doNotDisturb: isFresh(presence, now) && presence.dnd,
+    continuousUsageMin: reportedUsageMinutes(presence, now),
   };
 }
 
